@@ -101,15 +101,30 @@
         <!-- Muestra Visual Hero: El Dúo Maridaje (Chocolate Imperial + Jabón Imperial) -->
         <div class="hero-product-showcase">
           <div class="hero-pack-cards">
-            <!-- Tarjeta 1: Chocolate Imperial Premium -->
+            <!-- Tarjeta 1: Chocolate Imperial Premium con Slider Frente / Reverso -->
             <div class="showcase-card chocolate-card">
               <span class="showcase-pill-tag">🍫 Chocolate Imperial 80%</span>
-              <div class="showcase-card-img-wrapper">
-                <img src="assets/img/chocolate-imperial-premium.jpg" alt="Chocolate Imperial Premium 80% Cacao Colombiano Crema de Whisky y Pistacho Tostado en Leña">
+              <div class="chocolate-slider-container" id="hero-chocolate-slider">
+                <div class="chocolate-slider-track">
+                  <div class="chocolate-slide active">
+                    <img src="assets/img/chocolate-front.jpg" alt="Chocolate Imperial 80% - Vista Frontal">
+                    <span class="slide-caption-tag">Frente &bull; 80% Cacao</span>
+                  </div>
+                  <div class="chocolate-slide">
+                    <img src="assets/img/chocolate-back.jpg" alt="Chocolate Imperial 80% - Información Nutricional">
+                    <span class="slide-caption-tag">Reverso &bull; Tabla Oficial</span>
+                  </div>
+                </div>
+                <button type="button" class="slider-nav-btn prev" aria-label="Ver imagen anterior">‹</button>
+                <button type="button" class="slider-nav-btn next" aria-label="Ver imagen siguiente">›</button>
+                <div class="slider-toggle-pills">
+                  <button type="button" class="toggle-pill active" data-slide="0">Frente</button>
+                  <button type="button" class="toggle-pill" data-slide="1">Reverso</button>
+                </div>
               </div>
               <div class="showcase-card-info">
                 <h3 class="showcase-card-title">Chocolate Imperial 80%</h3>
-                <p class="showcase-card-desc">Ganache con Crema de Whisky madurado y pistacho tostado en leña. Sello rojo con premio exclusivo.</p>
+                <p class="showcase-card-desc">Ganache con Crema de Whisky y pistacho en leña. Desliza para ver la tabla nutricional y detalles de cata.</p>
               </div>
             </div>
 
@@ -194,8 +209,23 @@
         <div class="anatomy-cards-stack">
           <!-- Card A+: Chocolate Imperial 80% con Whisky y Pistacho -->
           <div class="aplus-feature-card">
-            <div class="aplus-media">
-              <img src="assets/img/chocolate-imperial-premium.jpg" alt="Anatomía de Chocolate Imperial 80% con Whisky y Pistacho">
+            <div class="aplus-media chocolate-slider-container" id="aplus-chocolate-slider">
+              <div class="chocolate-slider-track">
+                <div class="chocolate-slide active">
+                  <img src="assets/img/chocolate-front.jpg" alt="Anatomía de Chocolate Imperial 80% con Whisky y Pistacho - Frente">
+                  <span class="slide-caption-tag">Frente &bull; 80% Cacao</span>
+                </div>
+                <div class="chocolate-slide">
+                  <img src="assets/img/chocolate-back.jpg" alt="Anatomía de Chocolate Imperial 80% - Reverso e Ingredientes">
+                  <span class="slide-caption-tag">Reverso &bull; Ingredientes</span>
+                </div>
+              </div>
+              <button type="button" class="slider-nav-btn prev" aria-label="Anterior">‹</button>
+              <button type="button" class="slider-nav-btn next" aria-label="Siguiente">›</button>
+              <div class="slider-toggle-pills">
+                <button type="button" class="toggle-pill active" data-slide="0">Frente</button>
+                <button type="button" class="toggle-pill" data-slide="1">Reverso</button>
+              </div>
               <div class="aplus-floating-badge">
                 <span class="badge-gold-icon">⚜️</span>
                 <div>

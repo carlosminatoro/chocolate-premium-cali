@@ -221,6 +221,81 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // =========================================================================
+  // 5. CHOCOLATE BOX SLIDER (Frente / Reverso + Touch Swipe en Móviles)
+  // =========================================================================
+  const chocolateSliders = document.querySelectorAll('.chocolate-slider-container');
+
+  chocolateSliders.forEach(slider => {
+    const track = slider.querySelector('.chocolate-slider-track');
+    const slides = slider.querySelectorAll('.chocolate-slide');
+    const prevBtn = slider.querySelector('.slider-nav-btn.prev');
+    const nextBtn = slider.querySelector('.slider-nav-btn.next');
+    const pills = slider.querySelectorAll('.toggle-pill');
+
+    let currentSlide = 0;
+
+    function goToSlide(index) {
+      if (index < 0) index = 0;
+      if (index >= slides.length) index = slides.length - 1;
+      currentSlide = index;
+
+      if (track) {
+        track.style.transform = `translateX(-${currentSlide * 50}%)`;
+      }
+
+      slides.forEach((slide, idx) => {
+        slide.classList.toggle('active', idx === currentSlide);
+      });
+
+      pills.forEach((pill, idx) => {
+        pill.classList.toggle('active', idx === currentSlide);
+      });
+    }
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        goToSlide(currentSlide === 0 ? 1 : 0);
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        goToSlide(currentSlide === 0 ? 1 : 0);
+      });
+    }
+
+    pills.forEach((pill) => {
+      pill.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const slideIndex = parseInt(e.currentTarget.getAttribute('data-slide') || '0', 10);
+        goToSlide(slideIndex);
+      });
+    });
+
+    // Soporte para gestos táctiles (Swipe) en smartphones
+    let startX = 0;
+    let endX = 0;
+
+    slider.addEventListener('touchstart', (e) => {
+      startX = e.touches[0].clientX;
+    }, { passive: true });
+
+    slider.addEventListener('touchend', (e) => {
+      endX = e.changedTouches[0].clientX;
+      const diff = startX - endX;
+      if (Math.abs(diff) > 35) {
+        if (diff > 0) {
+          goToSlide(1); // Deslizar izquierda -> ver reverso
+        } else {
+          goToSlide(0); // Deslizar derecha -> ver frente
+        }
+      }
+    }, { passive: true });
+  });
+
   // Smooth scroll helper for internal anchor links
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
