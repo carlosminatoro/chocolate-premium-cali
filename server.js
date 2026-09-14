@@ -13,6 +13,12 @@ try {
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
 
+  // Prevenir cache agresivo en navegadores móviles
+  app.use((req, res, next) => {
+    res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+    next();
+  });
+
   // Servir archivos estáticos
   app.use(express.static(path.join(__dirname)));
 
@@ -112,7 +118,10 @@ if (!useExpress) {
           res.end('Error interno del servidor');
           return;
         }
-        res.writeHead(200, { 'Content-Type': contentType });
+        res.writeHead(200, {
+          'Content-Type': contentType,
+          'Cache-Control': 'no-cache, no-store, must-revalidate'
+        });
         res.end(content);
       });
     });
