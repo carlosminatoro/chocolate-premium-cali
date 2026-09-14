@@ -277,23 +277,179 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Soporte para gestos táctiles (Swipe) en smartphones
     let startX = 0;
+    let startY = 0;
     let endX = 0;
+    let isSwiping = false;
 
     slider.addEventListener('touchstart', (e) => {
       startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+      isSwiping = false;
+    }, { passive: true });
+
+    slider.addEventListener('touchmove', (e) => {
+      const diffX = Math.abs(e.touches[0].clientX - startX);
+      const diffY = Math.abs(e.touches[0].clientY - startY);
+      if (diffX > 12 || diffY > 12) {
+        isSwiping = true;
+      }
     }, { passive: true });
 
     slider.addEventListener('touchend', (e) => {
       endX = e.changedTouches[0].clientX;
       const diff = startX - endX;
       if (Math.abs(diff) > 35) {
+        isSwiping = true;
         if (diff > 0) {
           goToSlide(1); // Deslizar izquierda -> ver reverso
         } else {
           goToSlide(0); // Deslizar derecha -> ver frente
         }
       }
+      setTimeout(() => { isSwiping = false; }, 180);
     }, { passive: true });
+  });
+
+  // =========================================================================
+  // 6. IMAGE LIGHTBOX & WRAPPER DETAIL ZOOM (AMPLIAR ENVOLTURAS)
+  // =========================================================================
+  const lightbox = document.getElementById('image-lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  const lightboxTitle = document.getElementById('lightbox-title');
+  const lightboxCaption = document.getElementById('lightbox-caption');
+  const lightboxSwitch = document.getElementById('lightbox-switch');
+  const lightboxPillFront = document.getElementById('lightbox-pill-front');
+  const lightboxPillBack = document.getElementById('lightbox-pill-back');
+  const lightboxCloseBtn = document.getElementById('lightbox-close');
+  const lightboxBackdrop = document.getElementById('lightbox-backdrop');
+  const lightboxImgFrame = document.getElementById('lightbox-img-frame');
+
+  const CHOCOLATE_DETAILS = {
+    0: {
+      src: 'assets/img/chocolate-front.jpg',
+      title: 'Envoltura Frontal • Chocolate Imperial 80%',
+      caption: 'Edición de Autor con ganache de Whisky & Pistacho en leña. Destellos dorados y sello imperial de garantía.',
+      alt: 'Chocolate Imperial 80% - Cara Frontal'
+    },
+    1: {
+      src: 'assets/img/chocolate-back.jpg',
+      title: 'Reverso • Información Nutricional e Ingredientes',
+      caption: 'Cacao fino de aroma 80%, registro oficial de elaboración artesanal, tabla nutricional y notas de cata.',
+      alt: 'Chocolate Imperial 80% - Reverso Nutricional'
+    }
+  };
+
+  const SOAP_DETAILS = {
+    src: 'assets/img/jabon-imperial-premium.jpg',
+    title: 'Jabón Imperial Artesanal • Premio Oculto',
+    caption: 'Fórmula ancestral de avena sativa y miel silvestre saponificada en frío con pan de oro y cápsula de billete sellado.',
+    alt: 'Jabón Imperial Premium de Avena y Miel con Billetes'
+  };
+
+  function openLightbox(product, slideIndex = 0) {
+    if (!lightbox) return;
+
+    // Resetear posible zoom 1.5x previo
+    if (lightboxImgFrame) {
+      lightboxImgFrame.classList.remove('is-zoomed');
+    }
+
+    if (product === 'chocolate') {
+      if (lightboxSwitch) lightboxSwitch.style.display = 'inline-flex';
+      updateLightboxChocolateView(slideIndex);
+    } else {
+      if (lightboxSwitch) lightboxSwitch.style.display = 'none';
+      if (lightboxImg) {
+        lightboxImg.src = SOAP_DETAILS.src;
+        lightboxImg.alt = SOAP_DETAILS.alt;
+      }
+      if (lightboxTitle) lightboxTitle.textContent = SOAP_DETAILS.title;
+      if (lightboxCaption) lightboxCaption.textContent = SOAP_DETAILS.caption;
+    }
+
+    lightbox.classList.add('active');
+    lightbox.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden'; // Bloquear scroll de fondo
+  }
+
+  function updateLightboxChocolateView(slideIndex) {
+    const data = CHOCOLATE_DETAILS[slideIndex] || CHOCOLATE_DETAILS[0];
+    if (lightboxImg) {
+      lightboxImg.src = data.src;
+      lightboxImg.alt = data.alt;
+    }
+    if (lightboxTitle) lightboxTitle.textContent = data.title;
+    if (lightboxCaption) lightboxCaption.textContent = data.caption;
+
+    if (lightboxPillFront) lightboxPillFront.classList.toggle('active', slideIndex === 0);
+    if (lightboxPillBack) lightboxPillBack.classList.toggle('active', slideIndex === 1);
+  }
+
+  function closeLightbox() {
+    if (!lightbox) return;
+    lightbox.classList.remove('active');
+    lightbox.setAttribute('aria-hidden', 'true');
+    if (lightboxImgFrame) {
+      lightboxImgFrame.classList.remove('is-zoomed');
+    }
+    document.body.style.overflow = '';
+  }
+
+  if (lightboxPillFront) {
+    lightboxPillFront.addEventListener('click', (e) => {
+      e.stopPropagation();
+      updateLightboxChocolateView(0);
+    });
+  }
+
+  if (lightboxPillBack) {
+    lightboxPillBack.addEventListener('click', (e) => {
+      e.stopPropagation();
+      updateLightboxChocolateView(1);
+    });
+  }
+
+  if (lightboxCloseBtn) {
+    lightboxCloseBtn.addEventListener('click', closeLightbox);
+  }
+
+  if (lightboxBackdrop) {
+    lightboxBackdrop.addEventListener('click', closeLightbox);
+  }
+
+  // Alternar zoom 1.5x al tocar la imagen dentro del modal para leer letras pequeñas
+  if (lightboxImgFrame) {
+    lightboxImgFrame.addEventListener('click', () => {
+      lightboxImgFrame.classList.toggle('is-zoomed');
+    });
+  }
+
+  // Cerrar con tecla Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && lightbox && lightbox.classList.contains('active')) {
+      closeLightbox();
+    }
+  });
+
+  // Conectar evento click en todas las tarjetas de producto marcadas
+  document.querySelectorAll('.zoomable-target').forEach((target) => {
+    target.addEventListener('click', (e) => {
+      // Ignorar si se hizo click en flechas o píldoras del slider
+      if (e.target.closest('.slider-nav-btn, .slider-toggle-pills')) {
+        return;
+      }
+      const product = target.getAttribute('data-product') || 'chocolate';
+      let slideIdx = 0;
+      if (product === 'chocolate') {
+        const activeSlide = target.querySelector('.chocolate-slide.active');
+        if (activeSlide) {
+          const allSlides = Array.from(target.querySelectorAll('.chocolate-slide'));
+          slideIdx = allSlides.indexOf(activeSlide);
+          if (slideIdx < 0) slideIdx = 0;
+        }
+      }
+      openLightbox(product, slideIdx);
+    });
   });
 
   // Smooth scroll helper for internal anchor links

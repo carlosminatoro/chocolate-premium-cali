@@ -8,7 +8,7 @@
   <meta name="description" content="Chocolatería fina 80% cacao con licor y frutos secos + jabonería orgánica artesanal. Pago contra entrega garantizado en Cali con empaque térmico de lujo.">
   
   <!-- Google Fonts & Stylesheet -->
-  <link rel="stylesheet" href="css/styles.css?v=1.2">
+  <link rel="stylesheet" href="css/styles.css?v=1.3">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
@@ -104,7 +104,8 @@
             <!-- Tarjeta 1: Chocolate Imperial Premium con Slider Frente / Reverso -->
             <div class="showcase-card chocolate-card">
               <span class="showcase-pill-tag">🍫 Chocolate Imperial 80%</span>
-              <div class="chocolate-slider-container" id="hero-chocolate-slider">
+              <div class="chocolate-slider-container zoomable-target" id="hero-chocolate-slider" data-product="chocolate" title="Toca para ampliar y ver detalles de la envoltura">
+                <span class="zoom-hint-pill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg> Ver Detalles</span>
                 <div class="chocolate-slider-track">
                   <div class="chocolate-slide active">
                     <img src="assets/img/chocolate-front.jpg" alt="Chocolate Imperial 80% - Vista Frontal">
@@ -124,14 +125,15 @@
               </div>
               <div class="showcase-card-info">
                 <h3 class="showcase-card-title">Chocolate Imperial 80%</h3>
-                <p class="showcase-card-desc">Ganache con Crema de Whisky y pistacho en leña. Desliza para ver la tabla nutricional y detalles de cata.</p>
+                <p class="showcase-card-desc">Ganache con Crema de Whisky y pistacho en leña. Desliza o toca para ampliar y ver la envoltura de lujo.</p>
               </div>
             </div>
 
             <!-- Tarjeta 2: Jabón Imperial Premium (Avena y Miel con Premio Oculto) -->
             <div class="showcase-card soap-card">
               <span class="showcase-pill-tag gold-tag">🌿 Jabón Imperial &bull; Premio Oculto</span>
-              <div class="showcase-card-img-wrapper">
+              <div class="showcase-card-img-wrapper zoomable-target" data-product="soap" title="Toca para ampliar y ver detalles">
+                <span class="zoom-hint-pill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg> Ver Detalles</span>
                 <img src="assets/img/jabon-imperial-premium.jpg" alt="Jabón Imperial Premium Artesanal Avena y Miel con Premio Oculto en Billetes">
               </div>
               <div class="showcase-card-info">
@@ -209,7 +211,8 @@
         <div class="anatomy-cards-stack">
           <!-- Card A+: Chocolate Imperial 80% con Whisky y Pistacho -->
           <div class="aplus-feature-card">
-            <div class="aplus-media chocolate-slider-container" id="aplus-chocolate-slider">
+            <div class="aplus-media chocolate-slider-container zoomable-target" id="aplus-chocolate-slider" data-product="chocolate" title="Toca para ampliar y ver detalles de la envoltura">
+              <span class="zoom-hint-pill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg> Ver Detalles</span>
               <div class="chocolate-slider-track">
                 <div class="chocolate-slide active">
                   <img src="assets/img/chocolate-front.jpg" alt="Anatomía de Chocolate Imperial 80% con Whisky y Pistacho - Frente">
@@ -279,7 +282,8 @@
 
           <!-- Card A+: Jabón Imperial de Avena & Miel con Premio Oculto (Reverse Layout) -->
           <div class="aplus-feature-card reverse">
-            <div class="aplus-media">
+            <div class="aplus-media zoomable-target" data-product="soap" title="Toca para ampliar y ver detalles">
+              <span class="zoom-hint-pill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg> Ver Detalles</span>
               <img src="assets/img/jabon-imperial-premium.jpg" alt="Jabón Imperial Premium de Avena y Miel con Billetes de Premio Oculto">
               <div class="aplus-floating-badge">
                 <span class="badge-gold-icon">👑</span>
@@ -764,7 +768,41 @@
     </a>
   </aside>
 
+  <!-- 13. MODAL LIGHTBOX / ZOOM DE ENVOLTURA Y PRODUCTO -->
+  <div id="image-lightbox" class="lightbox-modal" aria-hidden="true" role="dialog" aria-label="Vista ampliada de la envoltura y producto">
+    <div class="lightbox-overlay" id="lightbox-backdrop"></div>
+    <div class="lightbox-container">
+      <div class="lightbox-header">
+        <div class="lightbox-badge">
+          <span class="lightbox-badge-icon">🔍</span>
+          <span id="lightbox-title">Detalles de la Envoltura</span>
+        </div>
+        <button type="button" class="lightbox-close-btn" id="lightbox-close" aria-label="Cerrar vista ampliada">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="lightbox-body">
+        <div class="lightbox-img-frame" id="lightbox-img-frame" title="Toca la imagen para alternar zoom 1.5x">
+          <img src="" alt="" id="lightbox-img">
+        </div>
+      </div>
+
+      <div class="lightbox-controls" id="lightbox-controls">
+        <div class="lightbox-switch-pills" id="lightbox-switch">
+          <button type="button" class="lightbox-pill active" id="lightbox-pill-front" data-slide="0">Cara Frontal</button>
+          <button type="button" class="lightbox-pill" id="lightbox-pill-back" data-slide="1">Cara Posterior (Nutricional)</button>
+        </div>
+        <p class="lightbox-caption" id="lightbox-caption">Diseño de alta gama con estampado en pan de oro y lacrado imperial.</p>
+        <span class="lightbox-hint">Toca fuera, la X o presiona Esc para cerrar &bull; Toca la imagen para acercar</span>
+      </div>
+    </div>
+  </div>
+
   <!-- Scripts -->
-  <script src="js/main.js?v=1.2"></script>
+  <script src="js/main.js?v=1.3"></script>
 </body>
 </html>

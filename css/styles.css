@@ -1857,3 +1857,227 @@ button, input, select, textarea {
   cursor: pointer;
   text-transform: uppercase;
 }
+
+/* ==========================================================================
+   14. MODAL LIGHTBOX / ZOOM DE ENVOLTURA Y PRODUCTO
+   ========================================================================== */
+.lightbox-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s ease;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.lightbox-modal.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.lightbox-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(6, 4, 3, 0.94);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  cursor: pointer;
+}
+
+.lightbox-container {
+  position: relative;
+  z-index: 2;
+  max-width: 580px;
+  width: 100%;
+  max-height: 94vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: scale(0.92) translateY(15px);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.lightbox-modal.active .lightbox-container {
+  transform: scale(1) translateY(0);
+}
+
+.lightbox-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.lightbox-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(26, 21, 16, 0.88);
+  border: 1px solid var(--gold-primary);
+  border-radius: 20px;
+  padding: 6px 14px;
+  color: var(--gold-light);
+  font-size: 0.82rem;
+  font-family: var(--font-serif-royal, serif);
+  letter-spacing: 0.5px;
+}
+
+.lightbox-close-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(212, 175, 55, 0.5);
+  color: var(--gold-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.lightbox-close-btn:hover {
+  background: var(--gold-primary);
+  color: #000;
+  transform: scale(1.08);
+}
+
+.lightbox-body {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox-img-frame {
+  max-width: 100%;
+  max-height: 66vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: radial-gradient(circle at 50% 50%, #1a140e 0%, #080605 100%);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.95), 0 0 45px rgba(212, 175, 55, 0.15);
+  padding: 12px;
+  overflow: hidden;
+  cursor: zoom-in;
+  transition: all 0.25s ease;
+}
+
+.lightbox-img-frame.is-zoomed {
+  cursor: zoom-out;
+  overflow: auto;
+}
+
+.lightbox-img-frame img {
+  max-width: 100%;
+  max-height: 62vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+  display: block;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+}
+
+.lightbox-img-frame.is-zoomed img {
+  transform: scale(1.6);
+}
+
+.lightbox-controls {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 14px;
+  gap: 8px;
+  text-align: center;
+}
+
+.lightbox-switch-pills {
+  display: inline-flex;
+  background: rgba(20, 15, 12, 0.92);
+  padding: 4px;
+  border-radius: 30px;
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  gap: 4px;
+}
+
+.lightbox-pill {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  padding: 6px 14px;
+  font-size: 0.78rem;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 600;
+}
+
+.lightbox-pill.active {
+  background: var(--gold-primary);
+  color: #0a0806;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
+}
+
+.lightbox-caption {
+  font-size: 0.85rem;
+  color: var(--gold-light);
+  margin: 0;
+  max-width: 480px;
+  line-height: 1.4;
+}
+
+.lightbox-hint {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  letter-spacing: 0.3px;
+}
+
+/* Indicadores de Zoom en las tarjetas */
+.zoom-hint-pill {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: rgba(10, 8, 6, 0.88);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(212, 175, 55, 0.5);
+  border-radius: 20px;
+  padding: 4px 10px;
+  font-size: 0.72rem;
+  color: var(--gold-light);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  z-index: 10;
+  pointer-events: none;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.7);
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+.zoomable-target {
+  cursor: zoom-in;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.zoomable-target:hover {
+  box-shadow: 0 0 25px rgba(212, 175, 55, 0.2);
+}
