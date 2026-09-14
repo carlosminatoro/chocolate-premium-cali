@@ -5,7 +5,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   // Configuration: Business WhatsApp Number (Cali, Colombia)
-  const WHATSAPP_PHONE = '573150000000'; // Reemplazar con el número comercial de la marca
+  const WHATSAPP_PHONE = '573163840641'; // +57 316 3840641 (Cali, Colombia)
 
   // Combo definitions
   const COMBOS = {
