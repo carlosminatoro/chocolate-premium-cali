@@ -370,35 +370,70 @@ document.addEventListener('DOMContentLoaded', () => {
     let startX = 0;
     let startY = 0;
     let endX = 0;
-    let isSwiping = false;
+    slider._isSwiping = false;
 
     slider.addEventListener('touchstart', (e) => {
-      startX = e.touches[0].clientX;
-      startY = e.touches[0].clientY;
-      isSwiping = false;
+      if (e.touches && e.touches[0]) {
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+      }
+      slider._isSwiping = false;
     }, { passive: true });
 
     slider.addEventListener('touchmove', (e) => {
-      const diffX = Math.abs(e.touches[0].clientX - startX);
-      const diffY = Math.abs(e.touches[0].clientY - startY);
-      if (diffX > 12 || diffY > 12) {
-        isSwiping = true;
+      if (e.touches && e.touches[0]) {
+        const diffX = Math.abs(e.touches[0].clientX - startX);
+        const diffY = Math.abs(e.touches[0].clientY - startY);
+        if (diffX > 10 || diffY > 10) {
+          slider._isSwiping = true;
+        }
       }
     }, { passive: true });
 
     slider.addEventListener('touchend', (e) => {
-      endX = e.changedTouches[0].clientX;
-      const diff = startX - endX;
-      if (Math.abs(diff) > 35) {
-        isSwiping = true;
-        if (diff > 0) {
-          goToSlide(1); // Deslizar izquierda -> ver siguiente
-        } else {
-          goToSlide(0); // Deslizar derecha -> ver anterior
+      if (e.changedTouches && e.changedTouches[0]) {
+        endX = e.changedTouches[0].clientX;
+        const diff = startX - endX;
+        if (Math.abs(diff) > 35) {
+          slider._isSwiping = true;
+          if (diff > 0) {
+            goToSlide(1); // Deslizar izquierda -> ver siguiente
+          } else {
+            goToSlide(0); // Deslizar derecha -> ver anterior
+          }
         }
       }
-      setTimeout(() => { isSwiping = false; }, 180);
+      if (slider._isSwiping) {
+        setTimeout(() => { slider._isSwiping = false; }, 250);
+      }
     }, { passive: true });
+
+    // Abrir Lightbox al hacer click o tap en la imagen del slider
+    slider.addEventListener('click', (e) => {
+      // Ignorar si se hizo click en flechas o píldoras del slider o insignias flotantes
+      if (e.target.closest('.slider-nav-btn, .slider-toggle-pills, .aplus-floating-badge')) {
+        return;
+      }
+      // Ignorar si fue un gesto táctil de deslizamiento (swipe)
+      if (slider._isSwiping) {
+        return;
+      }
+
+      // Determinar producto (soap o chocolate)
+      const isSoap = slider.classList.contains('soap-slider-container') || slider.getAttribute('data-product') === 'soap';
+      const product = isSoap ? 'soap' : 'chocolate';
+
+      // Determinar diapositiva activa o clickeada
+      const clickedSlide = e.target.closest('.chocolate-slide, .soap-slide');
+      let slideIdx = currentSlide;
+      if (clickedSlide) {
+        const allSlides = Array.from(slider.querySelectorAll('.chocolate-slide, .soap-slide'));
+        const foundIdx = allSlides.indexOf(clickedSlide);
+        if (foundIdx >= 0) slideIdx = foundIdx;
+      }
+
+      openLightbox(product, slideIdx);
+    });
   });
 
   // =========================================================================
@@ -479,6 +514,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function updateLightboxProductView(product, slideIndex) {
     currentLightboxIndex = slideIndex;
+    if (lightboxImgFrame) {
+      lightboxImgFrame.classList.remove('is-zoomed');
+    }
     const catalog = product === 'chocolate' ? CHOCOLATE_DETAILS : SOAP_DETAILS;
     const data = catalog[slideIndex] || catalog[0];
 
@@ -525,6 +563,14 @@ document.addEventListener('DOMContentLoaded', () => {
     lightboxBackdrop.addEventListener('click', closeLightbox);
   }
 
+  if (lightbox) {
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) {
+        closeLightbox();
+      }
+    });
+  }
+
   // Alternar zoom 1.5x al tocar la imagen dentro del modal para leer letras pequeñas
   if (lightboxImgFrame) {
     lightboxImgFrame.addEventListener('click', () => {
@@ -537,34 +583,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.key === 'Escape' && lightbox && lightbox.classList.contains('active')) {
       closeLightbox();
     }
-  });
-
-  // Conectar evento click en todas las tarjetas de producto marcadas
-  document.querySelectorAll('.zoomable-target').forEach((target) => {
-    target.addEventListener('click', (e) => {
-      // Ignorar si se hizo click en flechas o píldoras del slider
-      if (e.target.closest('.slider-nav-btn, .slider-toggle-pills')) {
-        return;
-      }
-      const product = target.getAttribute('data-product') || 'chocolate';
-      let slideIdx = 0;
-      if (product === 'chocolate') {
-        const activeSlide = target.querySelector('.chocolate-slide.active');
-        if (activeSlide) {
-          const allSlides = Array.from(target.querySelectorAll('.chocolate-slide'));
-          slideIdx = allSlides.indexOf(activeSlide);
-          if (slideIdx < 0) slideIdx = 0;
-        }
-      } else if (product === 'soap') {
-        const activeSlide = target.querySelector('.soap-slide.active');
-        if (activeSlide) {
-          const allSlides = Array.from(target.querySelectorAll('.soap-slide'));
-          slideIdx = allSlides.indexOf(activeSlide);
-          if (slideIdx < 0) slideIdx = 0;
-        }
-      }
-      openLightbox(product, slideIdx);
-    });
   });
 
   // Smooth scroll helper for internal anchor links
