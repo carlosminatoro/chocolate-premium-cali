@@ -222,35 +222,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Activar modo inicial
   applySiteMode(currentMode);
 
-  // =========================================================================
-  // 2.5 VIDEO TAB SWITCHER: Video Oficial vs Unboxing Short
-  // =========================================================================
-  const videoTabBtns = document.querySelectorAll('.video-tab-btn');
-  const containerPromo = document.getElementById('container-video-promo');
-  const containerShort = document.getElementById('container-video-short');
-  const promoVideo = document.getElementById('promo-native-video');
-  const shortIframe = document.getElementById('short-iframe');
 
-  videoTabBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const target = btn.getAttribute('data-video');
-      videoTabBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-
-      if (target === 'promo') {
-        if (containerPromo) containerPromo.style.display = 'block';
-        if (containerShort) containerShort.style.display = 'none';
-        if (shortIframe) {
-          const src = shortIframe.src;
-          shortIframe.src = src; // Pause iframe
-        }
-      } else {
-        if (containerPromo) containerPromo.style.display = 'none';
-        if (containerShort) containerShort.style.display = 'block';
-        if (promoVideo) promoVideo.pause();
-      }
-    });
-  });
 
   // =========================================================================
   // 3. CHECKOUT FORM VALIDATION & DIRECT WHATSAPP COD DISPATCH

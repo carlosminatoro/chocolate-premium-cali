@@ -8,7 +8,7 @@
   <meta name="description" content="Chocolatería fina 80% cacao con licor y frutos secos + jabonería orgánica artesanal. Pago contra entrega garantizado en Cali con empaque térmico de lujo.">
   
   <!-- Google Fonts & Stylesheet -->
-  <link rel="stylesheet" href="css/styles.css?v=1.8">
+  <link rel="stylesheet" href="css/styles.css?v=1.9">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
@@ -122,8 +122,7 @@
             <!-- Tarjeta 1: Chocolate Imperial Premium con Slider Frente / Reverso -->
             <div class="showcase-card chocolate-card only-combo">
               <span class="showcase-pill-tag">🍫 Chocolate Imperial 80%</span>
-              <div class="chocolate-slider-container zoomable-target" id="hero-chocolate-slider" data-product="chocolate" title="Toca para ampliar y ver detalles de la envoltura">
-                <span class="zoom-hint-pill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg> Ver Detalles</span>
+              <div class="chocolate-slider-container" id="hero-chocolate-slider">
                 <div class="chocolate-slider-track">
                   <div class="chocolate-slide active">
                     <img src="assets/img/chocolate-front.jpg" alt="Chocolate Imperial 80% - Vista Frontal">
@@ -150,8 +149,7 @@
             <!-- Tarjeta 2: Jabón Imperial Premium (Avena y Miel con Premio Oculto) -->
             <div class="showcase-card soap-card">
               <span class="showcase-pill-tag gold-tag">🌿 Jabón Imperial &bull; Premio Oculto</span>
-              <div class="soap-slider-container zoomable-target" id="hero-soap-slider" data-product="soap" title="Toca para ampliar y ver detalles del jabón">
-                <span class="zoom-hint-pill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg> Ver Detalles</span>
+              <div class="soap-slider-container" id="hero-soap-slider">
                 <div class="soap-slider-track">
                   <div class="soap-slide active">
                     <img src="assets/img/jabon-cuadrado.png" alt="Jabón Imperial Cuadrado - Sello Floral Artesanal">
@@ -244,8 +242,7 @@
         <div class="anatomy-cards-stack">
           <!-- Card A+: Chocolate Imperial 80% con Whisky y Pistacho -->
           <div class="aplus-feature-card only-combo">
-            <div class="aplus-media chocolate-slider-container zoomable-target" id="aplus-chocolate-slider" data-product="chocolate" title="Toca para ampliar y ver detalles de la envoltura">
-              <span class="zoom-hint-pill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg> Ver Detalles</span>
+            <div class="aplus-media chocolate-slider-container" id="aplus-chocolate-slider">
               <div class="chocolate-slider-track">
                 <div class="chocolate-slide active">
                   <img src="assets/img/chocolate-front.jpg" alt="Anatomía de Chocolate Imperial 80% con Whisky y Pistacho - Frente">
@@ -313,10 +310,9 @@
             </div>
           </div>
 
-          <!-- Card A+: Jabón Imperial de Avena & Miel con Premio Oculto (Reverse Layout) -->
+          <!-- Card A+: Jabón Imperial de Cacao Puro con Premio Oculto (Reverse Layout) -->
           <div class="aplus-feature-card reverse">
-            <div class="aplus-media soap-slider-container zoomable-target" id="aplus-soap-slider" data-product="soap" title="Toca para ampliar y ver detalles del jabón">
-              <span class="zoom-hint-pill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg> Ver Detalles</span>
+            <div class="aplus-media soap-slider-container" id="aplus-soap-slider">
               <div class="soap-slider-track">
                 <div class="soap-slide active">
                   <img src="assets/img/jabon-cuadrado.png" alt="Jabón Imperial Cuadrado - Sello Floral Artesanal">
@@ -383,37 +379,13 @@
     <section class="section-moneyswap" id="money-soap">
       <div class="container">
         <div class="moneyswap-grid">
-          <!-- Reproductor de Video Vertical Estilo Short / Reel -->
+          <!-- Reproductor de Video Promocional Oficial -->
           <div class="video-frame-wrapper">
-            <div class="video-live-pill">
-              <span class="live-dot"></span>
-              <span>Demostración Real</span>
-            </div>
-
-            <!-- Selector de Video: Video Promocional Oficial vs Unboxing Short -->
-            <div class="video-tab-switcher">
-              <button type="button" class="video-tab-btn active" data-video="promo">🎬 Video Promocional</button>
-              <button type="button" class="video-tab-btn" data-video="short">📱 Unboxing Viral</button>
-            </div>
-
-            <!-- Video 1: Video Promocional del Jabón (Archivo Local MP4) -->
             <div class="video-aspect-container" id="container-video-promo">
               <video id="promo-native-video" controls playsinline preload="metadata" poster="assets/img/jabon-cuadrado.png" class="brand-native-video">
                 <source src="assets/video/video-promocional-jabon.mp4" type="video/mp4">
                 Tu navegador no soporta reproducción de video.
               </video>
-            </div>
-
-            <!-- Video 2: Short Viral de YouTube -->
-            <div class="video-aspect-container" id="container-video-short" style="display: none;">
-              <iframe 
-                id="short-iframe"
-                src="https://www.youtube-nocookie.com/embed/3eW0pndFiS0?rel=0&modestbranding=1&playsinline=1" 
-                title="Unboxing del Jabón con Dinero en Efectivo" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                allowfullscreen 
-                loading="lazy">
-              </iframe>
             </div>
           </div>
 
@@ -1123,6 +1095,6 @@
   </div>
 
   <!-- Scripts -->
-  <script src="js/main.js?v=1.8"></script>
+  <script src="js/main.js?v=1.9"></script>
 </body>
 </html>
