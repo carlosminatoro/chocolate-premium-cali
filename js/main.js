@@ -341,13 +341,13 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // =========================================================================
-  // 5. CHOCOLATE BOX SLIDER (Frente / Reverso + Touch Swipe en Móviles)
+  // 5. PRODUCT BOX SLIDERS (Chocolate y Jabón con Touch Swipe en Móviles)
   // =========================================================================
-  const chocolateSliders = document.querySelectorAll('.chocolate-slider-container');
+  const productSliders = document.querySelectorAll('.chocolate-slider-container, .soap-slider-container');
 
-  chocolateSliders.forEach(slider => {
-    const track = slider.querySelector('.chocolate-slider-track');
-    const slides = slider.querySelectorAll('.chocolate-slide');
+  productSliders.forEach(slider => {
+    const track = slider.querySelector('.chocolate-slider-track, .soap-slider-track');
+    const slides = slider.querySelectorAll('.chocolate-slide, .soap-slide');
     const prevBtn = slider.querySelector('.slider-nav-btn.prev');
     const nextBtn = slider.querySelector('.slider-nav-btn.next');
     const pills = slider.querySelectorAll('.toggle-pill');
@@ -420,9 +420,9 @@ document.addEventListener('DOMContentLoaded', () => {
       if (Math.abs(diff) > 35) {
         isSwiping = true;
         if (diff > 0) {
-          goToSlide(1); // Deslizar izquierda -> ver reverso
+          goToSlide(1); // Deslizar izquierda -> ver siguiente
         } else {
-          goToSlide(0); // Deslizar derecha -> ver frente
+          goToSlide(0); // Deslizar derecha -> ver anterior
         }
       }
       setTimeout(() => { isSwiping = false; }, 180);
@@ -459,40 +459,57 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const SOAP_DETAILS = {
-    src: 'assets/img/jabon-imperial-premium.jpg',
-    title: 'Jabón Imperial Artesanal • Premio Oculto',
-    caption: 'Fórmula ancestral de avena sativa y miel silvestre saponificada en frío con pan de oro y cápsula de billete sellado.',
-    alt: 'Jabón Imperial Premium de Avena y Miel con Billetes'
+    0: {
+      src: 'assets/img/jabon-cuadrado.png',
+      title: 'Barra Cuadrada Artesanal • Sello Floral "To You Health"',
+      caption: 'Barra botánica con grabado floral y leyenda de bienestar. Saponificación en frío con avena y miel, ocultando una cápsula quirúrgica impermeable con billetes de premio en efectivo.',
+      alt: 'Jabón Imperial Cuadrado Sello Floral'
+    },
+    1: {
+      src: 'assets/img/jabon-corazon.png',
+      title: 'Corazón Botánico Artesanal • Textura Exfoliante de Avena',
+      caption: 'Formato artesanal de corazón con partículas exfoliantes de avena y miel virgen curada en frío. Masaje exfoliante dérmico y premio real en efectivo termosellado en su interior.',
+      alt: 'Jabón Imperial Corazón Botánico Exfoliante'
+    }
   };
+
+  let currentLightboxProduct = 'chocolate';
+  let currentLightboxIndex = 0;
 
   function openLightbox(product, slideIndex = 0) {
     if (!lightbox) return;
+    currentLightboxProduct = product;
+    currentLightboxIndex = slideIndex;
 
     // Resetear posible zoom 1.5x previo
     if (lightboxImgFrame) {
       lightboxImgFrame.classList.remove('is-zoomed');
     }
 
-    if (product === 'chocolate') {
-      if (lightboxSwitch) lightboxSwitch.style.display = 'inline-flex';
-      updateLightboxChocolateView(slideIndex);
-    } else {
-      if (lightboxSwitch) lightboxSwitch.style.display = 'none';
-      if (lightboxImg) {
-        lightboxImg.src = SOAP_DETAILS.src;
-        lightboxImg.alt = SOAP_DETAILS.alt;
-      }
-      if (lightboxTitle) lightboxTitle.textContent = SOAP_DETAILS.title;
-      if (lightboxCaption) lightboxCaption.textContent = SOAP_DETAILS.caption;
+    if (lightboxSwitch) {
+      lightboxSwitch.style.display = 'inline-flex';
     }
+
+    if (product === 'chocolate') {
+      if (lightboxPillFront) lightboxPillFront.textContent = 'Cara Frontal';
+      if (lightboxPillBack) lightboxPillBack.textContent = 'Cara Posterior (Nutricional)';
+    } else {
+      if (lightboxPillFront) lightboxPillFront.textContent = 'Barra Cuadrada';
+      if (lightboxPillBack) lightboxPillBack.textContent = 'Corazón Exfoliante';
+    }
+
+    updateLightboxProductView(product, slideIndex);
 
     lightbox.classList.add('active');
     lightbox.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden'; // Bloquear scroll de fondo
   }
 
-  function updateLightboxChocolateView(slideIndex) {
-    const data = CHOCOLATE_DETAILS[slideIndex] || CHOCOLATE_DETAILS[0];
+  function updateLightboxProductView(product, slideIndex) {
+    currentLightboxIndex = slideIndex;
+    const catalog = product === 'chocolate' ? CHOCOLATE_DETAILS : SOAP_DETAILS;
+    const data = catalog[slideIndex] || catalog[0];
+
     if (lightboxImg) {
       lightboxImg.src = data.src;
       lightboxImg.alt = data.alt;
@@ -517,14 +534,14 @@ document.addEventListener('DOMContentLoaded', () => {
   if (lightboxPillFront) {
     lightboxPillFront.addEventListener('click', (e) => {
       e.stopPropagation();
-      updateLightboxChocolateView(0);
+      updateLightboxProductView(currentLightboxProduct, 0);
     });
   }
 
   if (lightboxPillBack) {
     lightboxPillBack.addEventListener('click', (e) => {
       e.stopPropagation();
-      updateLightboxChocolateView(1);
+      updateLightboxProductView(currentLightboxProduct, 1);
     });
   }
 
@@ -563,6 +580,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const activeSlide = target.querySelector('.chocolate-slide.active');
         if (activeSlide) {
           const allSlides = Array.from(target.querySelectorAll('.chocolate-slide'));
+          slideIdx = allSlides.indexOf(activeSlide);
+          if (slideIdx < 0) slideIdx = 0;
+        }
+      } else if (product === 'soap') {
+        const activeSlide = target.querySelector('.soap-slide.active');
+        if (activeSlide) {
+          const allSlides = Array.from(target.querySelectorAll('.soap-slide'));
           slideIdx = allSlides.indexOf(activeSlide);
           if (slideIdx < 0) slideIdx = 0;
         }

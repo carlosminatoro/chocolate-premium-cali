@@ -436,7 +436,8 @@ button, input, select, textarea {
 /* ==========================================================================
    Interactive Chocolate Box Slider (Frente / Reverso)
    ========================================================================== */
-.chocolate-slider-container {
+.chocolate-slider-container,
+.soap-slider-container {
   position: relative;
   width: 100%;
   aspect-ratio: 16/11;
@@ -447,12 +448,14 @@ button, input, select, textarea {
 }
 
 @media (max-width: 639px) {
-  .chocolate-slider-container {
+  .chocolate-slider-container,
+  .soap-slider-container {
     aspect-ratio: 1/1; /* Más espacio vertical en móviles para apreciar ambas caras */
   }
 }
 
-.chocolate-slider-track {
+.chocolate-slider-track,
+.soap-slider-track {
   display: flex;
   width: 200%;
   height: 100%;
@@ -460,7 +463,8 @@ button, input, select, textarea {
   will-change: transform;
 }
 
-.chocolate-slide {
+.chocolate-slide,
+.soap-slide {
   flex: 0 0 50%;
   width: 50%;
   height: 100%;
@@ -472,7 +476,8 @@ button, input, select, textarea {
   background: radial-gradient(circle at 50% 50%, #15110d 0%, #080605 90%);
 }
 
-.chocolate-slide img {
+.chocolate-slide img,
+.soap-slide img {
   max-height: 88%;
   width: auto;
   max-width: 90%;
@@ -859,20 +864,23 @@ button, input, select, textarea {
   object-position: center;
 }
 
-/* Reglas especializadas cuando aplus-media contiene el slider del chocolate */
-.aplus-media.chocolate-slider-container {
+/* Reglas especializadas cuando aplus-media contiene el slider del chocolate o jabón */
+.aplus-media.chocolate-slider-container,
+.aplus-media.soap-slider-container {
   min-height: 480px;
   background: radial-gradient(circle at 50% 50%, #15110d 0%, #080605 90%);
 }
 
 @media (max-width: 639px) {
-  .aplus-media.chocolate-slider-container {
+  .aplus-media.chocolate-slider-container,
+  .aplus-media.soap-slider-container {
     min-height: 430px;
     aspect-ratio: 4/5;
   }
 }
 
-.aplus-media .chocolate-slider-track {
+.aplus-media .chocolate-slider-track,
+.aplus-media .soap-slider-track {
   display: flex;
   width: 200%;
   height: 100%;
@@ -880,7 +888,8 @@ button, input, select, textarea {
   will-change: transform;
 }
 
-.aplus-media .chocolate-slide {
+.aplus-media .chocolate-slide,
+.aplus-media .soap-slide {
   flex: 0 0 50%;
   width: 50%;
   height: 100%;
@@ -892,13 +901,15 @@ button, input, select, textarea {
 }
 
 .chocolate-slide img,
-.aplus-media .chocolate-slide img {
+.soap-slide img,
+.aplus-media .chocolate-slide img,
+.aplus-media .soap-slide img {
   max-height: 82% !important;
   width: auto !important;
   max-width: 88% !important;
   height: auto !important;
   object-fit: contain !important;
-  border-radius: 8px;
+  border-radius: 10px;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.9);
   margin: 0 auto;
   display: block;

@@ -8,7 +8,7 @@
   <meta name="description" content="Chocolatería fina 80% cacao con licor y frutos secos + jabonería orgánica artesanal. Pago contra entrega garantizado en Cali con empaque térmico de lujo.">
   
   <!-- Google Fonts & Stylesheet -->
-  <link rel="stylesheet" href="css/styles.css?v=1.6">
+  <link rel="stylesheet" href="css/styles.css?v=1.7">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
@@ -150,13 +150,28 @@
             <!-- Tarjeta 2: Jabón Imperial Premium (Avena y Miel con Premio Oculto) -->
             <div class="showcase-card soap-card">
               <span class="showcase-pill-tag gold-tag">🌿 Jabón Imperial &bull; Premio Oculto</span>
-              <div class="showcase-card-img-wrapper zoomable-target" data-product="soap" title="Toca para ampliar y ver detalles">
+              <div class="soap-slider-container zoomable-target" id="hero-soap-slider" data-product="soap" title="Toca para ampliar y ver detalles del jabón">
                 <span class="zoom-hint-pill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg> Ver Detalles</span>
-                <img src="assets/img/jabon-imperial-premium.jpg" alt="Jabón Imperial Premium Artesanal Avena y Miel con Premio Oculto en Billetes">
+                <div class="soap-slider-track">
+                  <div class="soap-slide active">
+                    <img src="assets/img/jabon-cuadrado.png" alt="Jabón Imperial Cuadrado - Sello Floral Artesanal">
+                    <span class="slide-caption-tag">Barra Cuadrada &bull; Sello Floral</span>
+                  </div>
+                  <div class="soap-slide">
+                    <img src="assets/img/jabon-corazon.png" alt="Jabón Imperial Corazón - Exfoliante Botánico">
+                    <span class="slide-caption-tag">Corazón &bull; Exfoliante Botánico</span>
+                  </div>
+                </div>
+                <button type="button" class="slider-nav-btn prev" aria-label="Ver presentación anterior">‹</button>
+                <button type="button" class="slider-nav-btn next" aria-label="Ver presentación siguiente">›</button>
+                <div class="slider-toggle-pills">
+                  <button type="button" class="toggle-pill active" data-slide="0">Cuadrado</button>
+                  <button type="button" class="toggle-pill" data-slide="1">Corazón</button>
+                </div>
               </div>
               <div class="showcase-card-info">
                 <h3 class="showcase-card-title">Jabón de Avena & Miel (80g)</h3>
-                <p class="showcase-card-desc">Saponificación en frío, destellos de oro y avena pura. ¡Cada barra puede contener billetes de premio en efectivo!</p>
+                <p class="showcase-card-desc">Saponificación en frío, grabado floral o corazón exfoliante. ¡Cada barra puede contener billetes de premio en efectivo!</p>
               </div>
             </div>
           </div>
@@ -300,9 +315,24 @@
 
           <!-- Card A+: Jabón Imperial de Avena & Miel con Premio Oculto (Reverse Layout) -->
           <div class="aplus-feature-card reverse">
-            <div class="aplus-media zoomable-target" data-product="soap" title="Toca para ampliar y ver detalles">
+            <div class="aplus-media soap-slider-container zoomable-target" id="aplus-soap-slider" data-product="soap" title="Toca para ampliar y ver detalles del jabón">
               <span class="zoom-hint-pill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg> Ver Detalles</span>
-              <img src="assets/img/jabon-imperial-premium.jpg" alt="Jabón Imperial Premium de Avena y Miel con Billetes de Premio Oculto">
+              <div class="soap-slider-track">
+                <div class="soap-slide active">
+                  <img src="assets/img/jabon-cuadrado.png" alt="Jabón Imperial Cuadrado - Sello Floral Artesanal">
+                  <span class="slide-caption-tag">Barra Cuadrada &bull; Sello Floral</span>
+                </div>
+                <div class="soap-slide">
+                  <img src="assets/img/jabon-corazon.png" alt="Jabón Imperial Corazón - Exfoliante Botánico">
+                  <span class="slide-caption-tag">Corazón &bull; Exfoliante Botánico</span>
+                </div>
+              </div>
+              <button type="button" class="slider-nav-btn prev" aria-label="Ver presentación anterior">‹</button>
+              <button type="button" class="slider-nav-btn next" aria-label="Ver presentación siguiente">›</button>
+              <div class="slider-toggle-pills">
+                <button type="button" class="toggle-pill active" data-slide="0">Cuadrado</button>
+                <button type="button" class="toggle-pill" data-slide="1">Corazón</button>
+              </div>
               <div class="aplus-floating-badge">
                 <span class="badge-gold-icon">👑</span>
                 <div>
@@ -313,9 +343,9 @@
             </div>
             <div class="aplus-content">
               <span class="aplus-tag">Cosmética Viva & Emoción</span>
-              <h3 class="aplus-title">Jabón Imperial Avena & Miel: Nutrición Pura y Dinero en Efectivo</h3>
+              <h3 class="aplus-title">Jabón Imperial: Barra Cuadrada o Corazón con Dinero en Efectivo</h3>
               <p class="aplus-desc">
-                Una experiencia inigualable en Colombia: jabón artesanal con materias primas orgánicas que cuidan tu piel, y un emocionante secreto en su interior. ¡Barras seleccionadas contienen billetes reales de $10.000, $20.000 y hasta $50.000 COP sellados higiénicamente!
+                Una experiencia inigualable en Colombia: jabón botánico artesanal con materias primas nobles que cuidan tu piel, disponible en dos presentaciones hechas a mano: la <strong>Barra Cuadrada con sello floral ("To you health")</strong> y el <strong>Corazón exfoliante</strong>. ¡Barras seleccionadas contienen billetes reales de $10.000, $20.000 y hasta $50.000 COP sellados higiénicamente!
               </p>
 
               <div class="layers-breakdown">
@@ -368,7 +398,7 @@
 
             <!-- Video 1: Video Promocional del Jabón (Archivo Local MP4) -->
             <div class="video-aspect-container" id="container-video-promo">
-              <video id="promo-native-video" controls playsinline preload="metadata" poster="assets/img/jabon-imperial-premium.jpg" class="brand-native-video">
+              <video id="promo-native-video" controls playsinline preload="metadata" poster="assets/img/jabon-cuadrado.png" class="brand-native-video">
                 <source src="assets/video/video-promocional-jabon.mp4" type="video/mp4">
                 Tu navegador no soporta reproducción de video.
               </video>
@@ -597,8 +627,8 @@
             </div>
 
             <ul class="combo-features-list">
-              <li><span class="feat-icon">✓</span> <strong>2 Jabones Imperiales Avena & Miel (80g c/u):</strong> Doble probabilidad de premio en efectivo.</li>
-              <li><span class="feat-icon">✓</span> <strong>Billetes reales de circulación:</strong> Dinero real termosellado dentro de cada barra.</li>
+              <li><span class="feat-icon">✓</span> <strong>2 Jabones Imperiales (80g c/u):</strong> Elige Barra Cuadrada Floral o Corazón (o 1 de cada uno).</li>
+              <li><span class="feat-icon">✓</span> <strong>Billetes reales de circulación:</strong> Doble probabilidad de dinero en efectivo termosellado.</li>
               <li><span class="feat-icon">✓</span> <strong>Caja rígida de gala:</strong> Lazo textil y divisor rígido de presentación.</li>
               <li><span class="feat-icon">✓</span> <strong>Tarjeta con sello de lacre:</strong> Dedicatoria personalizable.</li>
               <li><span class="feat-icon">✓</span> <strong>Ahorro especial:</strong> $7.000 COP de descuento vs compra individual.</li>
@@ -622,8 +652,8 @@
             </div>
 
             <ul class="combo-features-list">
-              <li><span class="feat-icon">✓</span> <strong>4 Jabones Imperiales con Premio Oculto:</strong> Cuádruple oportunidad de dinero real.</li>
-              <li><span class="feat-icon">✓</span> <strong>El obsequio más viral de Cali:</strong> Perfecto para autoregalo y consentir a la familia.</li>
+              <li><span class="feat-icon">✓</span> <strong>4 Jabones Imperiales con Premio Oculto:</strong> Surtido con Barras Cuadradas y Corazones.</li>
+              <li><span class="feat-icon">✓</span> <strong>El obsequio más viral de Cali:</strong> Cuádruple oportunidad de dinero real para toda la familia.</li>
               <li><span class="feat-icon">✓</span> <strong>Gran Estuche Maestro de Gala:</strong> Acabados dorados y presentación de alta boutique.</li>
               <li><span class="feat-icon">✓</span> <strong>Flete prioritario GRATIS:</strong> En cualquier barrio o sector de Cali.</li>
             </ul>
@@ -1086,6 +1116,6 @@
   </div>
 
   <!-- Scripts -->
-  <script src="js/main.js?v=1.6"></script>
+  <script src="js/main.js?v=1.7"></script>
 </body>
 </html>
