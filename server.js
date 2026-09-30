@@ -3,6 +3,7 @@ const fs = require('fs');
 const http = require('http');
 
 const PORT = process.env.PORT || 3000;
+const SITE_MODE = process.env.SITE_MODE || 'soap'; // 'soap' (piloto) o 'combo' (chocolate + jabón)
 
 // Intentar usar Express si está instalado
 let useExpress = false;
@@ -19,6 +20,12 @@ try {
     next();
   });
 
+  // Configuración dinámica del modo de sitio (Feature Flag)
+  app.get('/site-config.js', (req, res) => {
+    res.type('application/javascript');
+    res.send(`window.APP_DEFAULT_MODE = "${SITE_MODE}";`);
+  });
+
   // Servir archivos estáticos
   app.use(express.static(path.join(__dirname)));
 
@@ -30,7 +37,7 @@ try {
 
   // Healthcheck
   app.get('/health', (req, res) => {
-    res.status(200).json({ status: 'ok', uptime: process.uptime() });
+    res.status(200).json({ status: 'ok', uptime: process.uptime(), mode: SITE_MODE });
   });
 
   // Fallback SPA
@@ -60,12 +67,20 @@ if (!useExpress) {
     '.svg': 'image/svg+xml',
     '.webp': 'image/webp',
     '.ico': 'image/x-icon',
-    '.opus': 'audio/ogg'
+    '.opus': 'audio/ogg',
+    '.mp4': 'video/mp4'
   };
 
   const server = http.createServer((req, res) => {
     const url = new URL(req.url, `http://${req.headers.host}`);
     let pathname = decodeURIComponent(url.pathname);
+
+    // Feature Flag config script
+    if (pathname === '/site-config.js') {
+      res.writeHead(200, { 'Content-Type': 'application/javascript; charset=utf-8' });
+      res.end(`window.APP_DEFAULT_MODE = "${SITE_MODE}";`);
+      return;
+    }
 
     // Endpoint Webhook (POST)
     if (pathname === '/webhook' && req.method === 'POST') {
@@ -86,7 +101,7 @@ if (!useExpress) {
     // Endpoint Health Check (GET)
     if (pathname === '/health') {
       res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ status: 'ok', uptime: process.uptime() }));
+      res.end(JSON.stringify({ status: 'ok', uptime: process.uptime(), mode: SITE_MODE }));
       return;
     }
 

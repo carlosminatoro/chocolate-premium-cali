@@ -1,38 +1,77 @@
 /**
  * CACAO IMPERIAL & JABONERÍA BOTÁNICA
- * Interactive Logic: Parallax Scroll, Combo Selector, Dynamic Pricing, COD Checkout & WhatsApp API
+ * Interactive Logic: Parallax Scroll, Feature Flag (Soap Pilot vs Combo), Dynamic Pricing, COD Checkout & WhatsApp API
  */
 
 document.addEventListener('DOMContentLoaded', () => {
   // Configuration: Business WhatsApp Number (Cali, Colombia)
   const WHATSAPP_PHONE = '573163840641'; // +57 316 3840641 (Cali, Colombia)
 
-  // Combo definitions
-  const COMBOS = {
-    'individual': {
-      id: 'individual',
-      name: 'Individual Luxe Chocolate 80%',
-      price: 32000,
-      shipping: 9000,
-      badge: 'Individual'
+  // =========================================================================
+  // 0. FEATURE FLAG: PILOTO SOLO JABÓN ("MONEY SOAP") vs COMBO DÚO
+  // =========================================================================
+  const urlParams = new URLSearchParams(window.location.search);
+  const urlMode = urlParams.get('mode'); // ?mode=soap o ?mode=combo
+  const savedMode = sessionStorage.getItem('site_mode');
+  const serverDefaultMode = window.APP_DEFAULT_MODE || 'soap';
+
+  let currentMode = (urlMode === 'soap' || urlMode === 'combo') 
+    ? urlMode 
+    : (savedMode === 'soap' || savedMode === 'combo') 
+      ? savedMode 
+      : serverDefaultMode;
+
+  // Catálogos de ofertas diferenciados
+  const ALL_COMBOS = {
+    combo: {
+      'individual': {
+        id: 'individual',
+        name: 'Individual Luxe Chocolate 80%',
+        price: 32000,
+        shipping: 9000,
+        badge: 'Individual'
+      },
+      'duo': {
+        id: 'duo',
+        name: 'Duo Box Ritual & Maridaje (⭐ Más Elegido)',
+        price: 55000,
+        shipping: 9000,
+        badge: 'Más Vendido'
+      },
+      'grand': {
+        id: 'grand',
+        name: 'Grand Gift Box de Lujo (Doble)',
+        price: 98000,
+        shipping: 0,
+        badge: 'Envío Gratis'
+      }
     },
-    'duo': {
-      id: 'duo',
-      name: 'Duo Box Ritual & Maridaje (⭐ Más Elegido)',
-      price: 55000,
-      shipping: 9000,
-      badge: 'Más Vendido'
-    },
-    'grand': {
-      id: 'grand',
-      name: 'Grand Gift Box de Lujo (Doble)',
-      price: 98000,
-      shipping: 0, // Envío Gratis en Cali
-      badge: 'Envío Gratis'
+    soap: {
+      'soap_1': {
+        id: 'soap_1',
+        name: '1 Barra Jabón Imperial Sello Rojo',
+        price: 28000,
+        shipping: 9000,
+        badge: 'Individual'
+      },
+      'soap_2': {
+        id: 'soap_2',
+        name: 'Pack Dúo Imperial (2 Jabones ⭐ Más Vendido)',
+        price: 49000,
+        shipping: 9000,
+        badge: 'Más Vendido'
+      },
+      'soap_4': {
+        id: 'soap_4',
+        name: 'Caja Colección Familiar (4 Jabones 🎁 Envío Gratis)',
+        price: 89000,
+        shipping: 0,
+        badge: 'Envío Gratis'
+      }
     }
   };
 
-  let currentComboId = 'duo'; // Preseleccionado por defecto
+  let currentComboId = currentMode === 'soap' ? 'soap_2' : 'duo';
 
   // =========================================================================
   // 1. STEP-OUT STYLE PARALLAX SCROLL (Smooth 60fps with requestAnimationFrame)
@@ -95,14 +134,15 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function updateComboSelection(comboId, scrollToForm = false) {
-    const combo = COMBOS[comboId];
+    const catalog = ALL_COMBOS[currentMode] || ALL_COMBOS['soap'];
+    const combo = catalog[comboId] || catalog[currentMode === 'soap' ? 'soap_2' : 'duo'];
     if (!combo) return;
 
-    currentComboId = comboId;
+    currentComboId = combo.id;
 
     // Update Radio UI inside Checkout Form
     radioLabels.forEach(label => {
-      if (label.getAttribute('data-combo-id') === comboId) {
+      if (label.getAttribute('data-combo-id') === combo.id) {
         label.classList.add('selected');
         const input = label.querySelector('input[type="radio"]');
         if (input) input.checked = true;
@@ -132,6 +172,29 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  function applySiteMode(mode) {
+    currentMode = mode;
+    sessionStorage.setItem('site_mode', mode);
+
+    if (mode === 'soap') {
+      document.body.classList.add('mode-soap');
+      document.body.classList.remove('mode-combo');
+    } else {
+      document.body.classList.add('mode-combo');
+      document.body.classList.remove('mode-soap');
+    }
+
+    // Actualizar indicador visual del switcher en el footer
+    const modeLabel = document.getElementById('mode-name-label');
+    if (modeLabel) {
+      modeLabel.textContent = mode === 'soap' ? '🧼 Piloto Solo Jabón' : '🍫 Combo Dúo (Chocolate + Jabón)';
+    }
+
+    // Inicializar combo predeterminado según el modo
+    const defaultCombo = mode === 'soap' ? 'soap_2' : 'duo';
+    updateComboSelection(defaultCombo, false);
+  }
+
   // Radio button click listeners
   radioInputs.forEach(input => {
     input.addEventListener('change', (e) => {
@@ -147,8 +210,47 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Initialize default combo state
-  updateComboSelection('duo', false);
+  // Botón switcher en el footer para alternar en vivo
+  const btnToggleMode = document.getElementById('btn-toggle-mode');
+  if (btnToggleMode) {
+    btnToggleMode.addEventListener('click', () => {
+      const nextMode = currentMode === 'soap' ? 'combo' : 'soap';
+      applySiteMode(nextMode);
+    });
+  }
+
+  // Activar modo inicial
+  applySiteMode(currentMode);
+
+  // =========================================================================
+  // 2.5 VIDEO TAB SWITCHER: Video Oficial vs Unboxing Short
+  // =========================================================================
+  const videoTabBtns = document.querySelectorAll('.video-tab-btn');
+  const containerPromo = document.getElementById('container-video-promo');
+  const containerShort = document.getElementById('container-video-short');
+  const promoVideo = document.getElementById('promo-native-video');
+  const shortIframe = document.getElementById('short-iframe');
+
+  videoTabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.getAttribute('data-video');
+      videoTabBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      if (target === 'promo') {
+        if (containerPromo) containerPromo.style.display = 'block';
+        if (containerShort) containerShort.style.display = 'none';
+        if (shortIframe) {
+          const src = shortIframe.src;
+          shortIframe.src = src; // Pause iframe
+        }
+      } else {
+        if (containerPromo) containerPromo.style.display = 'none';
+        if (containerShort) containerShort.style.display = 'block';
+        if (promoVideo) promoVideo.pause();
+      }
+    });
+  });
 
   // =========================================================================
   // 3. CHECKOUT FORM VALIDATION & DIRECT WHATSAPP COD DISPATCH
@@ -170,29 +272,46 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      const combo = COMBOS[currentComboId];
+      const catalog = ALL_COMBOS[currentMode] || ALL_COMBOS['soap'];
+      const combo = catalog[currentComboId] || catalog[currentMode === 'soap' ? 'soap_2' : 'duo'];
       const grandTotal = combo.price + combo.shipping;
       const fleteTexto = combo.shipping === 0 ? 'Envío GRATIS' : `$${combo.shipping.toLocaleString('es-CO')} COP`;
 
-      // Structure high-converting order confirmation text
-      let text = `👑 *NUEVO PEDIDO - CACAO IMPERIAL (CONTRA ENTREGA)*\n\n`;
-      text += `Hola, deseo confirmar mi pedido para entrega en Cali:\n\n`;
-      text += `📦 *Combo:* ${combo.name}\n`;
-      text += `💰 *Valor Producto:* $${combo.price.toLocaleString('es-CO')} COP\n`;
-      text += `🛵 *Flete local:* ${fleteTexto}\n`;
-      text += `🏷️ *TOTAL A PAGAR AL RECIBIR:* $${grandTotal.toLocaleString('es-CO')} COP\n\n`;
-      text += `📍 *DATOS DE ENTREGA EN CALI:*\n`;
-      text += `👤 *Nombre:* ${nombre}\n`;
-      text += `📱 *WhatsApp:* ${telefono}\n`;
-      text += `🏠 *Dirección:* ${direccion}\n`;
-      text += `🏡 *Barrio / Sector:* ${barrio}, Cali\n`;
-      
-      if (mensajeRegalo) {
-        text += `💌 *Mensaje para la Tarjeta:* "${mensajeRegalo}"\n`;
+      let text = '';
+      if (currentMode === 'soap') {
+        text += `👑 *NUEVO PEDIDO CONTRA ENTREGA - JABÓN IMPERIAL (MONEY SOAP)* 👑\n\n`;
+        text += `Hola, deseo confirmar mi pedido del Jabón con Dinero Oculto para entrega en Cali:\n\n`;
+        text += `📦 *Pack:* ${combo.name}\n`;
+        text += `💰 *Valor Producto:* $${combo.price.toLocaleString('es-CO')} COP\n`;
+        text += `🛵 *Flete local:* ${fleteTexto}\n`;
+        text += `🏷️ *TOTAL A PAGAR AL RECIBIR:* $${grandTotal.toLocaleString('es-CO')} COP\n\n`;
+        text += `📍 *DATOS DE ENTREGA EN CALI:*\n`;
+        text += `👤 *Nombre:* ${nombre}\n`;
+        text += `📱 *WhatsApp:* ${telefono}\n`;
+        text += `🏠 *Dirección:* ${direccion}\n`;
+        text += `🏡 *Barrio / Sector:* ${barrio}, Cali\n`;
+        if (mensajeRegalo) {
+          text += `💌 *Dedicatoria:* "${mensajeRegalo}"\n`;
+        }
+        text += `\n💵 *Método de Pago:* Contra Entrega (Efectivo / Nequi / Daviplata al recibir).`;
+      } else {
+        text += `👑 *NUEVO PEDIDO - CACAO IMPERIAL (CONTRA ENTREGA)* 👑\n\n`;
+        text += `Hola, deseo confirmar mi pedido para entrega en Cali:\n\n`;
+        text += `📦 *Combo:* ${combo.name}\n`;
+        text += `💰 *Valor Producto:* $${combo.price.toLocaleString('es-CO')} COP\n`;
+        text += `🛵 *Flete local:* ${fleteTexto}\n`;
+        text += `🏷️ *TOTAL A PAGAR AL RECIBIR:* $${grandTotal.toLocaleString('es-CO')} COP\n\n`;
+        text += `📍 *DATOS DE ENTREGA EN CALI:*\n`;
+        text += `👤 *Nombre:* ${nombre}\n`;
+        text += `📱 *WhatsApp:* ${telefono}\n`;
+        text += `🏠 *Dirección:* ${direccion}\n`;
+        text += `🏡 *Barrio / Sector:* ${barrio}, Cali\n`;
+        if (mensajeRegalo) {
+          text += `💌 *Mensaje para la Tarjeta:* "${mensajeRegalo}"\n`;
+        }
+        text += `\n❄️ *Condición:* Empaque térmico con acumulador de frío.\n`;
+        text += `💵 *Método de Pago:* Contra Entrega (Efectivo / Nequi / Daviplata al recibir).`;
       }
-
-      text += `\n❄️ *Condición:* Empaque térmico con acumulador de frío.\n`;
-      text += `💵 *Método de Pago:* Contra Entrega (Efectivo / Nequi / Daviplata al recibir).`;
 
       const encodedUrl = `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(text)}`;
 

@@ -8,15 +8,19 @@
   <meta name="description" content="Chocolatería fina 80% cacao con licor y frutos secos + jabonería orgánica artesanal. Pago contra entrega garantizado en Cali con empaque térmico de lujo.">
   
   <!-- Google Fonts & Stylesheet -->
-  <link rel="stylesheet" href="css/styles.css?v=1.5">
+  <link rel="stylesheet" href="css/styles.css?v=1.6">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Site Feature Flag Configuration (Railway / Server / URL override) -->
+  <script src="/site-config.js"></script>
 </head>
 <body>
 
   <!-- 1. BARRA SUPERIOR DE ANUNCIOS -->
   <div class="top-bar">
-    <span>✨ PAGO CONTRA ENTREGA EN CALI | <span class="highlight">Envíos Express 24-48h</span> | Empaque térmico con gel refrigerante ✨</span>
+    <span class="only-combo">✨ PAGO CONTRA ENTREGA EN CALI | <span class="highlight">Envíos Express 24-48h</span> | Empaque térmico con gel refrigerante ✨</span>
+    <span class="only-soap">✨ JABÓN VIRAL CON PREMIO EN EFECTIVO | <span class="highlight">Pago Contra Entrega en Cali</span> | Billetes reales en barras seleccionadas ✨</span>
   </div>
 
   <!-- 2. NAVEGACIÓN PRINCIPAL -->
@@ -28,7 +32,8 @@
         </svg>
         <div class="brand-titles">
           <span class="brand-name">CACAO IMPERIAL</span>
-          <span class="brand-tagline">Jabonería Botánica & Chocolatería Fina</span>
+          <span class="brand-tagline only-combo">Jabonería Botánica & Chocolatería Fina</span>
+          <span class="brand-tagline only-soap">Jabonería Botánica Artesanal &bull; Edición Money Soap</span>
         </div>
       </div>
       <a href="#pedido-contraentrega" class="header-cta-btn">
@@ -72,29 +77,42 @@
       <div class="container hero-content-wrapper">
         <div class="hero-royal-emblem">
           <span class="crown-badge">👑</span>
-          <span>Edición de Autor &bull; Cacao Fino & Botánica</span>
+          <span class="only-combo">Edición de Autor &bull; Cacao Fino & Botánica</span>
+          <span class="only-soap">Edición Viral Cali &bull; Sello Rojo & Premio Oculto</span>
         </div>
 
-        <h1 class="hero-title">
+        <h1 class="hero-title only-combo">
           El arte de regalar placer y bienestar en una <span class="text-gradient-gold">sola caja</span>
         </h1>
+        <h1 class="hero-title only-soap">
+          El jabón botánico de avena y miel con <span class="text-gradient-gold">dinero real en su interior</span>
+        </h1>
 
-        <p class="hero-subtitle">
+        <p class="hero-subtitle only-combo">
           Una experiencia sensorial única en Cali: la pureza de la jabonería orgánica en frío unida al carácter de nuestro chocolate fino al 80% con destilados y pistachos tostados en leña.
+        </p>
+        <p class="hero-subtitle only-soap">
+          Saponificación artesanal en frío con avena viva, miel pura, copos de oro y billetes reales de premio ocultos. Paga contra entrega en efectivo o Nequi al recibir en Cali.
         </p>
 
         <div class="hero-badges-row">
           <div class="hero-badge">
             <i>🌿</i> 100% Botánico & Saponificación en Frío
           </div>
-          <div class="hero-badge">
+          <div class="hero-badge only-soap">
+            <i>💵</i> Billetes Reales de Circulación Nacional
+          </div>
+          <div class="hero-badge only-combo">
             <i>🍫</i> 80% Cacao Colombiano & Ganache de Licor
           </div>
           <div class="hero-badge">
             <i>🛵</i> Pago Contra Entrega en Cali
           </div>
-          <div class="hero-badge">
+          <div class="hero-badge only-combo">
             <i>❄️</i> Empaque Térmico con Gel Frío
+          </div>
+          <div class="hero-badge only-soap">
+            <i>🌾</i> Avena Coloidal & Miel Silvestre
           </div>
         </div>
 
@@ -102,7 +120,7 @@
         <div class="hero-product-showcase">
           <div class="hero-pack-cards">
             <!-- Tarjeta 1: Chocolate Imperial Premium con Slider Frente / Reverso -->
-            <div class="showcase-card chocolate-card">
+            <div class="showcase-card chocolate-card only-combo">
               <span class="showcase-pill-tag">🍫 Chocolate Imperial 80%</span>
               <div class="chocolate-slider-container zoomable-target" id="hero-chocolate-slider" data-product="chocolate" title="Toca para ampliar y ver detalles de la envoltura">
                 <span class="zoom-hint-pill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg> Ver Detalles</span>
@@ -157,7 +175,7 @@
     </section>
 
     <!-- 4. SECCIÓN RITUAL & STORYTELLING -->
-    <section class="section-ritual">
+    <section class="section-ritual only-combo">
       <div class="container">
         <div class="section-title-wrapper">
           <span class="section-eyebrow">El Concepto &bull; Lujo Cotidiano</span>
@@ -210,7 +228,7 @@
 
         <div class="anatomy-cards-stack">
           <!-- Card A+: Chocolate Imperial 80% con Whisky y Pistacho -->
-          <div class="aplus-feature-card">
+          <div class="aplus-feature-card only-combo">
             <div class="aplus-media chocolate-slider-container zoomable-target" id="aplus-chocolate-slider" data-product="chocolate" title="Toca para ampliar y ver detalles de la envoltura">
               <span class="zoom-hint-pill"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg> Ver Detalles</span>
               <div class="chocolate-slider-track">
@@ -341,8 +359,25 @@
               <span class="live-dot"></span>
               <span>Demostración Real</span>
             </div>
-            <div class="video-aspect-container">
+
+            <!-- Selector de Video: Video Promocional Oficial vs Unboxing Short -->
+            <div class="video-tab-switcher">
+              <button type="button" class="video-tab-btn active" data-video="promo">🎬 Video Promocional</button>
+              <button type="button" class="video-tab-btn" data-video="short">📱 Unboxing Viral</button>
+            </div>
+
+            <!-- Video 1: Video Promocional del Jabón (Archivo Local MP4) -->
+            <div class="video-aspect-container" id="container-video-promo">
+              <video id="promo-native-video" controls playsinline preload="metadata" poster="assets/img/jabon-imperial-premium.jpg" class="brand-native-video">
+                <source src="assets/video/video-promocional-jabon.mp4" type="video/mp4">
+                Tu navegador no soporta reproducción de video.
+              </video>
+            </div>
+
+            <!-- Video 2: Short Viral de YouTube -->
+            <div class="video-aspect-container" id="container-video-short" style="display: none;">
               <iframe 
+                id="short-iframe"
                 src="https://www.youtube-nocookie.com/embed/3eW0pndFiS0?rel=0&modestbranding=1&playsinline=1" 
                 title="Unboxing del Jabón con Dinero en Efectivo" 
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
@@ -400,7 +435,7 @@
     </section>
 
     <!-- 6. TECNOLOGÍA DE EMPAQUE & CADENA DE FRÍO (LOGÍSTICA CALI) -->
-    <section class="section-thermal">
+    <section class="section-thermal only-combo">
       <div class="container">
         <div class="thermal-box">
           <div class="section-title-wrapper" style="margin-bottom: 20px;">
@@ -449,7 +484,7 @@
           <p class="section-lead">Todos nuestros combos incluyen empaque de regalo listo para entregar y pago contra entrega en Cali.</p>
         </div>
 
-        <div class="combos-grid">
+        <div class="combos-grid only-combo">
           <!-- Combo 1: Individual Luxe -->
           <div class="combo-card">
             <div class="combo-header">
@@ -520,6 +555,81 @@
 
             <button type="button" class="btn-select-combo" data-combo="grand">
               Pedir este Combo
+            </button>
+          </div>
+        </div>
+
+        <!-- GRILLA DE OFERTAS: MODO PILOTO SOLO JABÓN (MONEY SOAP) -->
+        <div class="combos-grid only-soap">
+          <!-- Pack 1: Barra Individual Sello Rojo -->
+          <div class="combo-card">
+            <div class="combo-header">
+              <h3 class="combo-name">Barra Individual Sello Rojo</h3>
+              <div class="combo-price-wrap">
+                <span class="combo-currency">$</span>
+                <span class="combo-amount">28.000</span>
+                <span class="combo-cop">COP</span>
+              </div>
+            </div>
+
+            <ul class="combo-features-list">
+              <li><span class="feat-icon">✓</span> <strong>1 Jabón Imperial Avena & Miel (80g):</strong> Saponificación en frío artesanal.</li>
+              <li><span class="feat-icon">✓</span> <strong>Oportunidad de billete real:</strong> Puede contener $10.000, $20.000 o $50.000 COP.</li>
+              <li><span class="feat-icon">✓</span> <strong>Cápsula hermética de grado médico:</strong> El billete jamás se humedece ni se deteriora.</li>
+              <li><span class="feat-icon">✓</span> <strong>Estuche protector individual:</strong> Acabado de autor con sellado conmemorativo.</li>
+            </ul>
+
+            <button type="button" class="btn-select-combo" data-combo="soap_1">
+              Pedir este Pack
+            </button>
+          </div>
+
+          <!-- Pack 2: Pack Dúo Imperial (MÁS VENDIDO) -->
+          <div class="combo-card popular">
+            <span class="combo-badge-top">⭐ Más Vendido &bull; Doble Premio</span>
+            <div class="combo-header">
+              <h3 class="combo-name">Pack Dúo Imperial</h3>
+              <div class="combo-price-wrap">
+                <span class="combo-currency">$</span>
+                <span class="combo-amount">49.000</span>
+                <span class="combo-cop">COP</span>
+              </div>
+            </div>
+
+            <ul class="combo-features-list">
+              <li><span class="feat-icon">✓</span> <strong>2 Jabones Imperiales Avena & Miel (80g c/u):</strong> Doble probabilidad de premio en efectivo.</li>
+              <li><span class="feat-icon">✓</span> <strong>Billetes reales de circulación:</strong> Dinero real termosellado dentro de cada barra.</li>
+              <li><span class="feat-icon">✓</span> <strong>Caja rígida de gala:</strong> Lazo textil y divisor rígido de presentación.</li>
+              <li><span class="feat-icon">✓</span> <strong>Tarjeta con sello de lacre:</strong> Dedicatoria personalizable.</li>
+              <li><span class="feat-icon">✓</span> <strong>Ahorro especial:</strong> $7.000 COP de descuento vs compra individual.</li>
+            </ul>
+
+            <button type="button" class="btn-select-combo" data-combo="soap_2">
+              Pedir este Pack
+            </button>
+          </div>
+
+          <!-- Pack 3: Caja Colección Familiar (ENVÍO GRATIS) -->
+          <div class="combo-card">
+            <span class="combo-badge-top free-shipping">🎁 Envío Gratis Cali</span>
+            <div class="combo-header">
+              <h3 class="combo-name">Caja Colección Familiar</h3>
+              <div class="combo-price-wrap">
+                <span class="combo-currency">$</span>
+                <span class="combo-amount">89.000</span>
+                <span class="combo-cop">COP</span>
+              </div>
+            </div>
+
+            <ul class="combo-features-list">
+              <li><span class="feat-icon">✓</span> <strong>4 Jabones Imperiales con Premio Oculto:</strong> Cuádruple oportunidad de dinero real.</li>
+              <li><span class="feat-icon">✓</span> <strong>El obsequio más viral de Cali:</strong> Perfecto para autoregalo y consentir a la familia.</li>
+              <li><span class="feat-icon">✓</span> <strong>Gran Estuche Maestro de Gala:</strong> Acabados dorados y presentación de alta boutique.</li>
+              <li><span class="feat-icon">✓</span> <strong>Flete prioritario GRATIS:</strong> En cualquier barrio o sector de Cali.</li>
+            </ul>
+
+            <button type="button" class="btn-select-combo" data-combo="soap_4">
+              Pedir este Pack
             </button>
           </div>
         </div>
@@ -667,8 +777,9 @@
 
           <form id="cod-order-form">
             <!-- Selección de Combo dentro del formulario -->
-            <label class="form-label">Selecciona tu Combo:</label>
-            <div class="combo-radio-group">
+            <!-- Selección de Combo en Modo Combo -->
+            <label class="form-label only-combo">Selecciona tu Combo:</label>
+            <div class="combo-radio-group only-combo" id="radio-group-combo">
               <label class="combo-radio-label selected" data-combo-id="duo">
                 <div class="radio-left">
                   <input type="radio" name="combo_select" value="duo" checked>
@@ -691,6 +802,34 @@
                   <span class="radio-title">Individual Luxe Chocolate 80%</span>
                 </div>
                 <span class="radio-price">$32.000</span>
+              </label>
+            </div>
+
+            <!-- Selección de Pack en Modo Piloto Solo Jabón -->
+            <label class="form-label only-soap">Selecciona tu Pack de Jabón:</label>
+            <div class="combo-radio-group only-soap" id="radio-group-soap">
+              <label class="combo-radio-label selected" data-combo-id="soap_2">
+                <div class="radio-left">
+                  <input type="radio" name="combo_select" value="soap_2">
+                  <span class="radio-title">Pack Dúo Imperial (2 Jabones ⭐ Más Vendido)</span>
+                </div>
+                <span class="radio-price">$49.000</span>
+              </label>
+
+              <label class="combo-radio-label" data-combo-id="soap_4">
+                <div class="radio-left">
+                  <input type="radio" name="combo_select" value="soap_4">
+                  <span class="radio-title">Caja Colección Familiar (4 Jabones 🎁 Envío Gratis)</span>
+                </div>
+                <span class="radio-price">$89.000</span>
+              </label>
+
+              <label class="combo-radio-label" data-combo-id="soap_1">
+                <div class="radio-left">
+                  <input type="radio" name="combo_select" value="soap_1">
+                  <span class="radio-title">1 Barra Jabón Imperial Sello Rojo</span>
+                </div>
+                <span class="radio-price">$28.000</span>
               </label>
             </div>
 
@@ -780,14 +919,33 @@
           <h2 class="section-heading">Preguntas sobre envíos y conservación</h2>
         </div>
 
-        <div class="faq-list">
-          <div class="faq-item active">
+          <div class="faq-item only-combo">
             <button type="button" class="faq-question">
               <span>¿Cómo garantizan que el chocolate no llegue derretido con el calor de Cali?</span>
               <span class="faq-icon">+</span>
             </button>
             <div class="faq-answer">
               Todos los paquetes se despachan dentro de bolsas térmicas con gel refrigerante especializado congelado a -18°C. Esto mantiene la temperatura entre 15°C y 18°C durante todo el trayecto urbano, garantizando que el chocolate conserve su consistencia, brillo y crocancia.
+            </div>
+          </div>
+
+          <div class="faq-item active only-soap">
+            <button type="button" class="faq-question">
+              <span>¿Cómo funciona el premio en efectivo dentro del jabón?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              Cada barra seleccionada contiene en su centro una cápsula termosellada de grado médico impermeable con un billete real de circulación nacional ($10.000, $20.000 o $50.000 COP). A medida que utilizas tu jabón en el baño diario, la cápsula se revela intacta, seca e higiénica para que disfrutes tu premio.
+            </div>
+          </div>
+
+          <div class="faq-item only-soap">
+            <button type="button" class="faq-question">
+              <span>¿Para qué tipo de piel está recomendado el Jabón Imperial?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              Es ideal para todo tipo de piel, especialmente pieles sensibles o secas. Su fórmula con avena viva, miel silvestre y aceites saponificados en frío nutre intensamente, restaura el manto lipídico y deja una sensación sedosa y calmante.
             </div>
           </div>
 
@@ -811,7 +969,7 @@
             </div>
           </div>
 
-          <div class="faq-item">
+          <div class="faq-item only-combo">
             <button type="button" class="faq-question">
               <span>¿El aroma del jabón altera el sabor del chocolate si van en la misma caja?</span>
               <span class="faq-icon">+</span>
@@ -865,6 +1023,16 @@
         </div>
       </div>
 
+      <!-- Selector de Modo Piloto vs Combo (Feature Flag Switcher) -->
+      <div class="mode-switcher-wrap">
+        <span class="mode-switcher-label">Modo de Campaña:</span>
+        <button type="button" class="mode-toggle-btn" id="btn-toggle-mode" title="Haz clic para alternar entre Modo Piloto Solo Jabón y Modo Combo Dúo">
+          <span class="mode-dot"></span>
+          <span class="mode-name" id="mode-name-label">🧼 Piloto Solo Jabón</span>
+          <span class="mode-switch-icon">⇄ Alternar</span>
+        </button>
+      </div>
+
       <a href="https://wa.me/573163840641?text=Hola,%20tengo%20una%20consulta%20sobre%20Cacao%20Imperial" target="_blank" class="footer-whatsapp-link">
         <span>¿Tienes dudas antes de comprar? Chatea con un asesor por WhatsApp</span>
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -876,7 +1044,7 @@
   <aside class="mobile-bottom-bar" aria-label="Acción Rápida Móvil">
     <div class="bar-info">
       <span class="bar-title" id="bar-title">Más Vendido</span>
-      <span class="bar-price" id="bar-price">$64.000 COP</span>
+      <span class="bar-price" id="bar-price">$49.000 COP</span>
     </div>
     <a href="#pedido-contraentrega" class="bar-btn">
       Pedir Ahora
@@ -918,6 +1086,6 @@
   </div>
 
   <!-- Scripts -->
-  <script src="js/main.js?v=1.5"></script>
+  <script src="js/main.js?v=1.6"></script>
 </body>
 </html>
