@@ -49,21 +49,21 @@ document.addEventListener('DOMContentLoaded', () => {
     soap: {
       'soap_1': {
         id: 'soap_1',
-        name: '1 Barra Jabón Imperial Sello Rojo',
+        name: '1 Barra Jabón de Cacao Puro Sello Rojo',
         price: 28000,
         shipping: 9000,
         badge: 'Individual'
       },
       'soap_2': {
         id: 'soap_2',
-        name: 'Pack Dúo Imperial (2 Jabones ⭐ Más Vendido)',
+        name: 'Pack Dúo Cacao Puro (2 Jabones ⭐ Más Vendido)',
         price: 49000,
         shipping: 9000,
         badge: 'Más Vendido'
       },
       'soap_4': {
         id: 'soap_4',
-        name: 'Caja Colección Familiar (4 Jabones 🎁 Envío Gratis)',
+        name: 'Caja Colección Cacao Puro (4 Jabones 🎁 Envío Gratis)',
         price: 89000,
         shipping: 0,
         badge: 'Envío Gratis'
@@ -279,8 +279,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
       let text = '';
       if (currentMode === 'soap') {
-        text += `👑 *NUEVO PEDIDO CONTRA ENTREGA - JABÓN IMPERIAL (MONEY SOAP)* 👑\n\n`;
-        text += `Hola, deseo confirmar mi pedido del Jabón con Dinero Oculto para entrega en Cali:\n\n`;
+        text += `👑 *NUEVO PEDIDO CONTRA ENTREGA - JABÓN DE CACAO PURO (MONEY SOAP)* 👑\n\n`;
+        text += `Hola, deseo confirmar mi pedido del Jabón de Cacao Puro con Dinero Oculto para entrega en Cali:\n\n`;
         text += `📦 *Pack:* ${combo.name}\n`;
         text += `💰 *Valor Producto:* $${combo.price.toLocaleString('es-CO')} COP\n`;
         text += `🛵 *Flete local:* ${fleteTexto}\n`;
@@ -461,15 +461,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const SOAP_DETAILS = {
     0: {
       src: 'assets/img/jabon-cuadrado.png',
-      title: 'Barra Cuadrada Artesanal • Sello Floral "To You Health"',
-      caption: 'Barra botánica con grabado floral y leyenda de bienestar. Saponificación en frío con avena y miel, ocultando una cápsula quirúrgica impermeable con billetes de premio en efectivo.',
-      alt: 'Jabón Imperial Cuadrado Sello Floral'
+      title: 'Barra Cuadrada Artesanal • Cacao Puro & Sello Floral',
+      caption: 'Elaborado con manteca y cacao puro. Huele delicioso a chocolate y sus partículas retiran células muertas dejando la piel luminosa y suavecita. Cápsula impermeable con premio real en efectivo.',
+      alt: 'Jabón Imperial Cuadrado Cacao Puro'
     },
     1: {
       src: 'assets/img/jabon-corazon.png',
-      title: 'Corazón Botánico Artesanal • Textura Exfoliante de Avena',
-      caption: 'Formato artesanal de corazón con partículas exfoliantes de avena y miel virgen curada en frío. Masaje exfoliante dérmico y premio real en efectivo termosellado en su interior.',
-      alt: 'Jabón Imperial Corazón Botánico Exfoliante'
+      title: 'Corazón Botánico Artesanal • Cacao Exfoliante',
+      caption: 'Formato artesanal de corazón con partículas naturales de grano de cacao para masaje exfoliante. Piel suavecita y luminosa con irresistible aroma a chocolate y billetes de premio ocultos.',
+      alt: 'Jabón Imperial Corazón Cacao Exfoliante'
     }
   };
 

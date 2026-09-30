@@ -2427,6 +2427,42 @@ body.mode-soap .hero-pack-cards .soap-card {
   background: #000;
 }
 
+/* Bloque de Testimonio Real del Video Promocional */
+.video-quote-box {
+  background: rgba(26, 20, 16, 0.75);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-left: 4px solid var(--gold-primary);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin: 18px 0 22px;
+  position: relative;
+  backdrop-filter: blur(8px);
+}
+
+.video-quote-box p {
+  font-family: var(--font-heading);
+  font-style: italic;
+  color: var(--gold-light);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0 0 8px 0;
+}
+
+.video-quote-box p strong {
+  color: #fff;
+  font-weight: 700;
+}
+
+.video-quote-box cite {
+  display: block;
+  font-family: var(--font-body);
+  font-style: normal;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
 /* Selector de Modo en el Footer */
 .mode-switcher-wrap {
   margin: 18px 0;
